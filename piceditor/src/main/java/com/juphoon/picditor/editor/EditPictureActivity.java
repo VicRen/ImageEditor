@@ -6,11 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.juphoon.picditor.R;
+import com.juphoon.picditor.crop.CropFragment;
+import com.juphoon.picditor.utils.ActivityUtils;
 
 public class EditPictureActivity extends AppCompatActivity implements EditPictureContract.View {
 
@@ -27,12 +30,16 @@ public class EditPictureActivity extends AppCompatActivity implements EditPictur
     private View mMenuText;
     private View mMenuMosaic;
     private View mMenuCrop;
-    private View mCropMenuView;
     private View mTextMenuView;
     private View mDoodleMenuView;
     private View mMosaicMenuView;
+    private View mCropContainer;
+
+    private Fragment mCropFragment;
 
     private EditPicturePresenter mPresenter;
+
+    private int angle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,10 +58,11 @@ public class EditPictureActivity extends AppCompatActivity implements EditPictur
         mMenuCrop.setOnClickListener(mOnClickListener);
         findViewById(R.id.tvCancel).setOnClickListener(mOnClickListener);
         findViewById(R.id.tvSave).setOnClickListener(mOnClickListener);
-        mCropMenuView = findViewById(R.id.cropMenu);
+        mCropContainer = findViewById(R.id.cropContainer);
         mTextMenuView = findViewById(R.id.textMenu);
         mDoodleMenuView = findViewById(R.id.doodleMenu);
         mMosaicMenuView = findViewById(R.id.mosaicMenu);
+
         mPresenter = new EditPicturePresenter();
         mPresenter.setView(this);
         mPresenter.handleIntent(getIntent());
@@ -70,6 +78,10 @@ public class EditPictureActivity extends AppCompatActivity implements EditPictur
     public void onLoadOriginImage(String filePath) {
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         mIvOrigin.setImageBitmap(bitmap);
+
+        mCropFragment = CropFragment.newInstance(filePath);
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCropFragment,
+                R.id.cropContainer);
     }
 
     @Override
@@ -88,7 +100,8 @@ public class EditPictureActivity extends AppCompatActivity implements EditPictur
         mMenuText.setSelected(mode == EditPictureContract.MODE_TEXT);
         mMenuMosaic.setSelected(mode == EditPictureContract.MODE_MOSAIC);
         mMenuCrop.setSelected(mode == EditPictureContract.MODE_CROP);
-        mCropMenuView.setVisibility(mode == EditPictureContract.MODE_CROP ? View.VISIBLE : View.INVISIBLE);
+        mCropContainer.setVisibility(mode == EditPictureContract.MODE_CROP ? View.VISIBLE : View.INVISIBLE);
+        mIvOrigin.setVisibility(mode == EditPictureContract.MODE_CROP ? View.INVISIBLE : View.VISIBLE);
         mTextMenuView.setVisibility(mode == EditPictureContract.MODE_TEXT ? View.VISIBLE : View.INVISIBLE);
         mDoodleMenuView.setVisibility(mode == EditPictureContract.MODE_DOODLE ? View.VISIBLE : View.INVISIBLE);
         mMosaicMenuView.setVisibility(mode == EditPictureContract.MODE_MOSAIC ? View.VISIBLE : View.INVISIBLE);
@@ -100,7 +113,7 @@ public class EditPictureActivity extends AppCompatActivity implements EditPictur
             onModeChanged(mPresenter.getMode());
         } else {
             mMenuContainer.setVisibility(View.INVISIBLE);
-            mCropMenuView.setVisibility(View.INVISIBLE);
+            mCropContainer.setVisibility(View.INVISIBLE);
             mTextMenuView.setVisibility(View.INVISIBLE);
             mDoodleMenuView.setVisibility(View.INVISIBLE);
             mMosaicMenuView.setVisibility(View.INVISIBLE);
