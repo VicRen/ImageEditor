@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">ImgEditor</string>
-    <string name="edit_pic_cancel">取消</string>
-    <string name="edit_pic_save">保存</string>
-    <string name="edit_pic_restore">还原</string>
-</resources>
