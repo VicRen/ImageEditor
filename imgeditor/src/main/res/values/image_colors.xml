@@ -6,9 +6,11 @@
 
     <color name="image_color_white">#FFFFFF</color>
     <color name="image_color_black">#2B2B2B</color>
-    <color name="image_color_red">#FF5151</color>
-    <color name="image_color_cyan">#20FFCD</color>
-    <color name="image_color_yellow">#FFCC00</color>
-    <color name="image_color_blue">#0078FF</color>
+    <color name="image_color_red">#E83822</color>
+    <color name="image_color_yellow">#FAE756</color>
+    <color name="image_color_green">#50BD32</color>
+    <color name="image_color_blue">#419CEB</color>
+    <color name="image_color_purple">#861CF4</color>
+    <color name="image_color_orange">#F1A536</color>
 
 </resources>

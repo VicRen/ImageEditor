@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_bg_top"
+        android:background="#B000"
         android:padding="12dp">
 
         <TextView
@@ -50,15 +50,19 @@
         android:id="@+id/layout_op_sub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#B000"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingBottom="9dp"
+        android:paddingTop="9dp"
         android:visibility="invisible"
         tools:visibility="visible">
 
         <ViewSwitcher
             android:id="@+id/vs_op_sub"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:measureAllChildren="true">
 
             <com.juphoon.imgeditor.view.PictureColorGroup
@@ -66,17 +70,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:checkedButton="@+id/cr_red"
+                android:checkedButton="@+id/cr_white"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <com.juphoon.imgeditor.view.PictureColorRadio
-                    android:id="@+id/cr_red"
+                    android:id="@+id/cr_white"
                     android:layout_width="@dimen/image_color"
                     android:layout_height="@dimen/image_color"
                     android:layout_margin="@dimen/image_color_margin"
-                    android:button="@null"
-                    app:image_color="@color/image_color_red" />
+                    app:image_color="@color/image_color_white" />
 
                 <com.juphoon.imgeditor.view.PictureColorRadio
                     android:layout_width="@dimen/image_color"
@@ -88,14 +91,8 @@
                     android:layout_width="@dimen/image_color"
                     android:layout_height="@dimen/image_color"
                     android:layout_margin="@dimen/image_color_margin"
-
-                    app:image_color="@color/image_color_white" />
-
-                <com.juphoon.imgeditor.view.PictureColorRadio
-                    android:layout_width="@dimen/image_color"
-                    android:layout_height="@dimen/image_color"
-                    android:layout_margin="@dimen/image_color_margin"
-                    app:image_color="@color/image_color_cyan" />
+                    android:button="@null"
+                    app:image_color="@color/image_color_red" />
 
                 <com.juphoon.imgeditor.view.PictureColorRadio
                     android:layout_width="@dimen/image_color"
@@ -107,24 +104,90 @@
                     android:layout_width="@dimen/image_color"
                     android:layout_height="@dimen/image_color"
                     android:layout_margin="@dimen/image_color_margin"
+                    app:image_color="@color/image_color_green" />
+
+                <com.juphoon.imgeditor.view.PictureColorRadio
+                    android:layout_width="@dimen/image_color"
+                    android:layout_height="@dimen/image_color"
+                    android:layout_margin="@dimen/image_color_margin"
                     app:image_color="@color/image_color_blue" />
+
+                <com.juphoon.imgeditor.view.PictureColorRadio
+                    android:layout_width="@dimen/image_color"
+                    android:layout_height="@dimen/image_color"
+                    android:layout_margin="@dimen/image_color_margin"
+                    app:image_color="@color/image_color_purple" />
+
+                <com.juphoon.imgeditor.view.PictureColorRadio
+                    android:layout_width="@dimen/image_color"
+                    android:layout_height="@dimen/image_color"
+                    android:layout_margin="@dimen/image_color_margin"
+                    app:image_color="@color/image_color_orange" />
 
             </com.juphoon.imgeditor.view.PictureColorGroup>
 
-            <TextView
+            <com.juphoon.imgeditor.view.PictureStrokeGroup
+                android:id="@+id/cg_strokes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/image_mosaic_tip"
-                android:textColor="@color/image_color_white"
-                android:textSize="12sp" />
+                android:layout_gravity="center_vertical"
+                android:checkedButton="@+id/cr_30"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.juphoon.imgeditor.view.PictureStrokeRadio
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    app:image_stroke_color="#167FFF" />
+
+                <com.juphoon.imgeditor.view.PictureStrokeRadio
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginStart="23dp"
+                    app:image_stroke_color="#167FFF" />
+
+                <com.juphoon.imgeditor.view.PictureStrokeRadio
+                    android:id="@+id/cr_30"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginStart="23dp"
+                    app:image_stroke_color="#167FFF" />
+
+                <com.juphoon.imgeditor.view.PictureStrokeRadio
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginStart="23dp"
+                    app:image_stroke_color="#167FFF" />
+
+                <com.juphoon.imgeditor.view.PictureStrokeRadio
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginStart="23dp"
+                    app:image_stroke_color="#167FFF" />
+
+            </com.juphoon.imgeditor.view.PictureStrokeGroup>
 
         </ViewSwitcher>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:background="#ffffff" />
 
         <ImageButton
             android:id="@+id/btn_undo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
             android:background="@null"
             android:contentDescription="@string/image_undo"
             android:onClick="onClick"
@@ -132,63 +195,23 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/transparent" />
+
     <RadioGroup
         android:id="@+id/rg_modes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/image_bg_bottom"
+        android:layout_height="45dp"
+        android:background="#B000"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="20dp">
+        android:orientation="horizontal">
 
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <RadioButton
-            android:id="@+id/rb_doodle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/image_btn_doodle"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:textColor="#FFF" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <ImageButton
-            android:id="@+id/btn_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:contentDescription="@string/image_text"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:src="@drawable/image_btn_text"
-            android:textColor="#FFF" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <RadioButton
-            android:id="@+id/rb_mosaic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/image_btn_mosaic"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:textColor="#FFF" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/btn_clip"
@@ -204,7 +227,67 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="2" />
+
+        <ImageButton
+            android:id="@+id/btn_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="@string/image_text"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:src="@drawable/image_btn_text"
+            android:textColor="#FFF" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <RadioButton
+            android:id="@+id/rb_doodle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/image_btn_doodle"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:textColor="#FFF" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <RadioButton
+            android:id="@+id/rb_mosaic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/image_btn_mosaic"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:textColor="#FFF" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4" />
+
+        <ImageButton
+            android:id="@+id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="@string/image_send"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:src="@mipmap/img_ic_send"
+            android:textColor="#FFF" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </RadioGroup>
 

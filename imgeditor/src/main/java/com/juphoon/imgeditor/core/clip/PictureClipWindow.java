@@ -55,7 +55,7 @@ public class PictureClipWindow implements PictureClip {
      */
     private static final float VERTICAL_RATIO = 0.8f;
 
-    private static final int COLOR_CELL = 0x80FFFFFF;
+    private static final int COLOR_CELL = Color.WHITE;
 
     private static final int COLOR_FRAME = Color.WHITE;
 

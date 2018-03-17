@@ -4,4 +4,5 @@ import com.juphoon.imgeditor.core.PictureViewPortrait;
 
 public interface PictureSticker extends PictureStickerPortrait, PictureViewPortrait {
 
+    void enableInterceptTouch(boolean enabled);
 }

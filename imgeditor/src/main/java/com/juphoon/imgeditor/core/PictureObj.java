@@ -91,7 +91,7 @@ public class PictureObj {
     private PictureSticker mForeSticker;
 
     /**
-     * 为被选中贴片
+     * 未被选中贴片
      */
     private List<PictureSticker> mBackStickers = new ArrayList<>();
 
@@ -202,6 +202,10 @@ public class PictureObj {
 
             mClipWin.setClipping(false);
         }
+
+        for (PictureSticker sticker : mBackStickers) {
+            sticker.enableInterceptTouch(mode == PictureMode.NONE);
+        }
     }
 
     // TODO
@@ -286,8 +290,8 @@ public class PictureObj {
 
         if (mMode == PictureMode.MOSAIC) {
 
-            int w = Math.round(mImage.getWidth() / 64f);
-            int h = Math.round(mImage.getHeight() / 64f);
+            int w = Math.round(mImage.getWidth() / 8f);
+            int h = Math.round(mImage.getHeight() / 8f);
 
             w = Math.max(w, 8);
             h = Math.max(h, 8);

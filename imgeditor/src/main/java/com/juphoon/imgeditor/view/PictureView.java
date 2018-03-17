@@ -35,7 +35,14 @@ import com.juphoon.imgeditor.core.sticker.PictureStickerPortrait;
 public class PictureView extends FrameLayout implements Runnable, ScaleGestureDetector.OnScaleGestureListener,
         ValueAnimator.AnimatorUpdateListener, PictureStickerPortrait.Callback, Animator.AnimatorListener {
 
-    private static final String TAG = "IMGView";
+    private static final String TAG = PictureView.class.getSimpleName();
+
+    public interface PictureViewListener {
+
+        void onMoveBegin(PictureMode mode);
+
+        void onMoveEnd();
+    }
 
     private PictureMode mPreMode = PictureMode.NONE;
 
@@ -54,6 +61,8 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
     private Paint mDoodlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private Paint mMosaicPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    private PictureViewListener mPictureViewListener;
 
     private static final boolean DEBUG = true;
 
@@ -97,6 +106,10 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
     public void setImageBitmap(Bitmap image) {
         mImage.setBitmap(image);
         invalidate();
+    }
+
+    public void setPictureViewListener(PictureViewListener listener) {
+        mPictureViewListener = listener;
     }
 
     public void setMode(PictureMode mode) {
@@ -149,6 +162,13 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         }
     }
 
+    public void doRotateRight() {
+        if (!isHoming()) {
+            mImage.rotate(90);
+            onHoming();
+        }
+    }
+
     public void resetClip() {
         mImage.resetClip();
         onHoming();
@@ -167,6 +187,10 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
 
     public void setPenColor(int color) {
         mPen.setColor(color);
+    }
+
+    public void setPenStrokeWidth(int strokeWidth) {
+        mPen.setWidth(strokeWidth);
     }
 
     public boolean isDoodleEmpty() {
@@ -210,7 +234,7 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         if (!mImage.isMosaicEmpty() || (mImage.getMode() == PictureMode.MOSAIC && !mPen.isEmpty())) {
             int count = mImage.onDrawMosaicsPath(canvas);
             if (mImage.getMode() == PictureMode.MOSAIC && !mPen.isEmpty()) {
-                mDoodlePaint.setStrokeWidth(PicturePath.BASE_MOSAIC_WIDTH);
+                mDoodlePaint.setStrokeWidth(mPen.getWidth());
                 canvas.save();
                 RectF frame = mImage.getClipFrame();
                 canvas.rotate(-mImage.getRotate(), frame.centerX(), frame.centerY());
@@ -372,7 +396,8 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
 
         PictureMode mode = mImage.getMode();
 
-        if (mode == PictureMode.NONE || mode == PictureMode.CLIP) {
+        if (mode == PictureMode.CLIP) {
+            // scroll only enabled in clip mode
             handled |= onTouchNONE(event);
         } else if (mPointerCount > 1) {
             onPathDone();
@@ -384,11 +409,17 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 mImage.onTouchDown(event.getX(), event.getY());
+                if (mPictureViewListener != null) {
+                    mPictureViewListener.onMoveBegin(mImage.getMode());
+                }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mImage.onTouchUp(getScrollX(), getScrollY());
                 onHoming();
+                if (mPictureViewListener != null) {
+                    mPictureViewListener.onMoveEnd();
+                }
                 break;
         }
 
@@ -479,7 +510,7 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
 
     @Override
     public boolean onScaleBegin(ScaleGestureDetector detector) {
-        if (mPointerCount > 1) {
+        if (mPointerCount > 1 && mImage.getMode() == PictureMode.CLIP) {
             mImage.onScaleBegin();
             return true;
         }
@@ -496,7 +527,6 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         mImage.onHoming(animation.getAnimatedFraction());
         toApplyHoming((PictureHoming) animation.getAnimatedValue());
     }
-
 
     private void toApplyHoming(PictureHoming homing) {
         mImage.setScale(homing.scale);
@@ -571,6 +601,9 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
     }
 
     private boolean onScroll(float dx, float dy) {
+        // scroll only enabled in CLIP mode
+        if (mImage.getMode() != PictureMode.CLIP)
+            return true;
         PictureHoming homing = mImage.onScroll(getScrollX(), getScrollY(), -dx, -dy);
         if (homing != null) {
             toApplyHoming(homing);

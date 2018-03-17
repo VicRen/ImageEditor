@@ -47,6 +47,8 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
 
     private Rect mTempFrame = new Rect();
 
+    private boolean mEnableInterceptTouch = true;
+
     private static final float MAX_SCALE_VALUE = 4f;
 
     private static final int ANCHOR_SIZE = 48;
@@ -99,6 +101,11 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
     }
 
     public abstract View onCreateContentView(Context context);
+
+    @Override
+    public void enableInterceptTouch(boolean enabled) {
+        mEnableInterceptTouch = enabled;
+    }
 
     @Override
     public float getScale() {
@@ -210,6 +217,9 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (!mEnableInterceptTouch) {
+            return super.onInterceptTouchEvent(ev);
+        }
         if (!isShowing() && ev.getAction() == MotionEvent.ACTION_DOWN) {
             mDownShowing = 0;
             show();
@@ -220,6 +230,9 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!mEnableInterceptTouch) {
+            return super.onTouchEvent(event);
+        }
 
         boolean handled = mMoveHelper.onTouch(this, event);
 

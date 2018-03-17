@@ -10,13 +10,14 @@ public class PicturePath {
 
     protected Path path;
 
-    private int color = Color.RED;
+    private int color = Color.WHITE;
 
     private float width = BASE_MOSAIC_WIDTH;
+    private float mosaicWidth = BASE_MOSAIC_WIDTH;
 
     private PictureMode mode = PictureMode.DOODLE;
 
-    public static final float BASE_DOODLE_WIDTH = 20f;
+    public static final float BASE_DOODLE_WIDTH = 14f;
 
     public static final float BASE_MOSAIC_WIDTH = 72f;
 

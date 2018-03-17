@@ -24,7 +24,7 @@ public class PictureStickerTextView extends PictureStickerView implements Pictur
 
     private static final int PADDING = 26;
 
-    private static final float TEXT_SIZE_SP = 24f;
+    private static final float TEXT_SIZE_SP = 8f;
 
     public PictureStickerTextView(Context context) {
         this(context, null, 0);

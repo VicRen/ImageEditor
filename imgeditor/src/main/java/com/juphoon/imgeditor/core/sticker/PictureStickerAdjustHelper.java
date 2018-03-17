@@ -9,7 +9,7 @@ import com.juphoon.imgeditor.view.PictureStickerView;
 
 public class PictureStickerAdjustHelper implements View.OnTouchListener {
 
-    private static final String TAG = "PictureStickerAdjustHelper";
+    private static final String TAG = "PictureStickerAdjHelper";
 
     private View mView;
 

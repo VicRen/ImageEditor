@@ -177,7 +177,17 @@ public class PictureEditActivity extends PictureEditBaseActivity {
     }
 
     @Override
+    public void onRotateClipRightClick() {
+        mPictureView.doRotateRight();
+    }
+
+    @Override
     public void onColorChanged(int checkedColor) {
         mPictureView.setPenColor(checkedColor);
+    }
+
+    @Override
+    public void onStrokeChanged(int checkedWidth) {
+        mPictureView.setPenStrokeWidth(checkedWidth);
     }
 }

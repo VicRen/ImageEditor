@@ -8,6 +8,7 @@
     <string name="image_done">完成</string>
     <string name="image_cancel">取消</string>
     <string name="image_rotate">旋转</string>
+    <string name="image_send">发送</string>
 
     <string name="image_mosaic_tip">请直接在图片上涂抹虚化</string>
     <string name="image_undo">撤销</string>

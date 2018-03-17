@@ -7,44 +7,56 @@
     android:layout_gravity="center_horizontal"
     android:checkedButton="@+id/cr_white"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="4dp">
+    android:orientation="horizontal">
 
     <com.juphoon.imgeditor.view.PictureColorRadio
         android:id="@+id/cr_white"
         android:layout_width="@dimen/image_color"
         android:layout_height="@dimen/image_color"
-        android:layout_margin="@dimen/image_color_margin"
+        android:layout_margin="@dimen/image_color_text_margin"
         app:image_color="@color/image_color_white" />
 
     <com.juphoon.imgeditor.view.PictureColorRadio
         android:layout_width="@dimen/image_color"
         android:layout_height="@dimen/image_color"
-        android:layout_margin="@dimen/image_color_margin"
+        android:layout_margin="@dimen/image_color_text_margin"
         app:image_color="@color/image_color_black" />
 
     <com.juphoon.imgeditor.view.PictureColorRadio
         android:layout_width="@dimen/image_color"
         android:layout_height="@dimen/image_color"
-        android:layout_margin="@dimen/image_color_margin"
+        android:layout_margin="@dimen/image_color_text_margin"
+        android:button="@null"
         app:image_color="@color/image_color_red" />
 
     <com.juphoon.imgeditor.view.PictureColorRadio
         android:layout_width="@dimen/image_color"
         android:layout_height="@dimen/image_color"
-        android:layout_margin="@dimen/image_color_margin"
-        app:image_color="@color/image_color_cyan" />
-
-    <com.juphoon.imgeditor.view.PictureColorRadio
-        android:layout_width="@dimen/image_color"
-        android:layout_height="@dimen/image_color"
-        android:layout_margin="@dimen/image_color_margin"
+        android:layout_margin="@dimen/image_color_text_margin"
         app:image_color="@color/image_color_yellow" />
 
     <com.juphoon.imgeditor.view.PictureColorRadio
         android:layout_width="@dimen/image_color"
         android:layout_height="@dimen/image_color"
-        android:layout_margin="@dimen/image_color_margin"
+        android:layout_margin="@dimen/image_color_text_margin"
+        app:image_color="@color/image_color_green" />
+
+    <com.juphoon.imgeditor.view.PictureColorRadio
+        android:layout_width="@dimen/image_color"
+        android:layout_height="@dimen/image_color"
+        android:layout_margin="@dimen/image_color_text_margin"
         app:image_color="@color/image_color_blue" />
+
+    <com.juphoon.imgeditor.view.PictureColorRadio
+        android:layout_width="@dimen/image_color"
+        android:layout_height="@dimen/image_color"
+        android:layout_margin="@dimen/image_color_text_margin"
+        app:image_color="@color/image_color_purple" />
+
+    <com.juphoon.imgeditor.view.PictureColorRadio
+        android:layout_width="@dimen/image_color"
+        android:layout_height="@dimen/image_color"
+        android:layout_margin="@dimen/image_color_text_margin"
+        app:image_color="@color/image_color_orange" />
 
 </com.juphoon.imgeditor.view.PictureColorGroup>

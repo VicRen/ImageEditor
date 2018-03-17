@@ -14,17 +14,17 @@ import com.juphoon.imgeditor.R;
 
 public class PictureColorRadio extends RadioButton implements ValueAnimator.AnimatorUpdateListener {
 
-    private static final String TAG = "IMGColorRadio";
+    private static final String TAG = PictureColorRadio.class.getSimpleName();
 
-    private int mColor = Color.WHITE;
+    protected int mColor = Color.WHITE;
 
-    private int mStrokeColor = Color.WHITE;
+    protected int mStrokeColor = Color.WHITE;
 
     private float mRadiusRatio = 0f;
 
     private ValueAnimator mAnimator;
 
-    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    protected Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private static final float RADIUS_BASE = 0.6f;
 
@@ -97,11 +97,11 @@ public class PictureColorRadio extends RadioButton implements ValueAnimator.Anim
         canvas.restore();
     }
 
-    private float getBallRadius(float radius) {
+    protected float getBallRadius(float radius) {
         return radius * ((RADIUS_BALL - RADIUS_BASE) * mRadiusRatio + RADIUS_BASE);
     }
 
-    private float getRingRadius(float radius) {
+    protected float getRingRadius(float radius) {
         return radius * ((RADIUS_RING - RADIUS_BASE) * mRadiusRatio + RADIUS_BASE);
     }
 
