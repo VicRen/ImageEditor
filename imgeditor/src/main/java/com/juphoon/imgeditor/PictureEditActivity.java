@@ -126,29 +126,10 @@ public class PictureEditActivity extends PictureEditBaseActivity {
 
     @Override
     public void onDoneClick() {
-        String path = getIntent().getStringExtra(EXTRA_IMAGE_SAVE_PATH);
-        if (!TextUtils.isEmpty(path)) {
-            Bitmap bitmap = mPictureView.saveBitmap();
-            if (bitmap != null) {
-                FileOutputStream fout = null;
-                try {
-                    fout = new FileOutputStream(path);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fout);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (fout != null) {
-                        try {
-                            fout.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                setResult(RESULT_OK);
-                finish();
-                return;
-            }
+        if (savePicture()) {
+            setResult(RESULT_OK);
+            finish();
+            return;
         }
         setResult(RESULT_CANCELED);
         finish();
@@ -189,5 +170,37 @@ public class PictureEditActivity extends PictureEditBaseActivity {
     @Override
     public void onStrokeChanged(int checkedWidth) {
         mPictureView.setPenStrokeWidth(checkedWidth);
+    }
+
+    @Override
+    public void onSendClick() {
+        setResult(savePicture() ? RESULT_FIRST_USER : RESULT_CANCELED);
+        finish();
+    }
+
+    private boolean savePicture() {
+        String path = getIntent().getStringExtra(EXTRA_IMAGE_SAVE_PATH);
+        if (!TextUtils.isEmpty(path)) {
+            Bitmap bitmap = mPictureView.saveBitmap();
+            if (bitmap != null) {
+                FileOutputStream fout = null;
+                try {
+                    fout = new FileOutputStream(path);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fout);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fout != null) {
+                        try {
+                            fout.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

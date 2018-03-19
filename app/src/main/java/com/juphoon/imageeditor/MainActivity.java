@@ -39,16 +39,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_EDIT_PICTURE) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_FIRST_USER) {
                 if (!TextUtils.isEmpty(mOutputFilePath)) {
                     File file = new File(mOutputFilePath);
                     if (file.exists()) {
                         Bitmap bitmap = BitmapFactory.decodeFile(mOutputFilePath);
                         mIvChosenImage.setImageBitmap(bitmap);
+                        Toast.makeText(this, resultCode == RESULT_OK ? "Edit picture succeeded." : "Edit picture succeeded and sent.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                Toast.makeText(this, "Edit picture succeeded.", Toast.LENGTH_SHORT).show();
             }
             Toast.makeText(this, "Edit picture failed.", Toast.LENGTH_SHORT).show();
         } else if (requestCode == REQUEST_PICK_PICTURE) {

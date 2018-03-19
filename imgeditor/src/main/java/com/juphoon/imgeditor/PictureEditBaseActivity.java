@@ -116,6 +116,8 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
             onRotateClipClick();
         } else if (vid == R.id.ib_clip_rotate_right) {
             onRotateClipRightClick();
+        } else if (vid == R.id.btn_send) {
+            onSendClick();
         }
     }
 
@@ -259,6 +261,8 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
     public abstract void onColorChanged(int checkedColor);
 
     public abstract void onStrokeChanged(int checkedWidth);
+
+    public abstract void onSendClick();
 
     @Override
     public abstract void onText(PictureText text);
