@@ -14,6 +14,12 @@ public interface PictureStickerPortrait {
 
     boolean isShowing();
 
+    boolean startDrag();
+
+    boolean dragging(float x, float y);
+
+    boolean stopDrag(float x, float y);
+
     RectF getFrame();
 
 //    RectF getAdjustFrame();
@@ -33,5 +39,11 @@ public interface PictureStickerPortrait {
         <V extends View & PictureSticker> void onShowing(V stickerView);
 
         <V extends View & PictureSticker> boolean onRemove(V stickerView);
+
+        <V extends View & PictureSticker> boolean onDragStart(V stickerView);
+
+        <V extends View & PictureSticker> boolean onDragging(V stickerView, float x, float y);
+
+        <V extends View & PictureSticker> boolean onDragDone(V stickerView, float x, float y);
     }
 }

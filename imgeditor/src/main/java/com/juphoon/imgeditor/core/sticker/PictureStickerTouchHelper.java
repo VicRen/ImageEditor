@@ -2,6 +2,14 @@ package com.juphoon.imgeditor.core.sticker;
 
 public class PictureStickerTouchHelper {
 
-    // TODO
+    public interface Listener {
 
+        void onDragStart();
+
+        void onDraging();
+
+        void onDragDone();
+
+        void onReshapeStart();
+    }
 }

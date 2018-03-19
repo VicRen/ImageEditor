@@ -11,6 +11,7 @@ import android.widget.ViewSwitcher;
 
 import com.juphoon.imgeditor.core.PictureMode;
 import com.juphoon.imgeditor.core.PictureText;
+import com.juphoon.imgeditor.core.sticker.PictureSticker;
 import com.juphoon.imgeditor.view.PictureColorGroup;
 import com.juphoon.imgeditor.view.PictureStrokeGroup;
 import com.juphoon.imgeditor.view.PictureView;
@@ -34,6 +35,8 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
     private ViewSwitcher mOpSwitcher, mOpSubSwitcher;
 
     private ImageButton mBtnUndo;
+
+    private View mDeleteView;
 
     public static final int OP_HIDE = -1;
 
@@ -80,6 +83,8 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
 
         mLayoutOpSub = findViewById(R.id.layout_op_sub);
         mBtnUndo = findViewById(R.id.btn_undo);
+
+        mDeleteView = findViewById(R.id.delete_view);
     }
 
     @Override
@@ -193,12 +198,42 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
         updateUndoButton(mPictureView.getMode());
     }
 
+    @Override
+    public void onStickerDragStart() {
+        mDeleteView.setVisibility(View.VISIBLE);
+        mOpSwitcher.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onStickerDragging(float x, float y) {
+        mDeleteView.setVisibility(View.VISIBLE);
+        mOpSwitcher.setVisibility(View.INVISIBLE);
+        if (checkDeleteCollision(x, y)) {
+            mDeleteView.setBackgroundColor(getResources().getColor(R.color.image_color_delete_active_background));
+        } else {
+            mDeleteView.setBackgroundColor(getResources().getColor(R.color.image_color_op_background));
+        }
+    }
+
+    @Override
+    public void onStickerDragStop(PictureSticker sticker, float x, float y) {
+        mDeleteView.setVisibility(View.INVISIBLE);
+        mOpSwitcher.setVisibility(View.VISIBLE);
+        if (checkDeleteCollision(x, y)) {
+            sticker.remove();
+        }
+    }
+
     private void updateUndoButton(PictureMode mode) {
         if (mode == PictureMode.DOODLE) {
             mBtnUndo.setEnabled(!mPictureView.isDoodleEmpty());
         } else if (mode == PictureMode.MOSAIC) {
             mBtnUndo.setEnabled(!mPictureView.isMosaicEmpty());
         }
+    }
+
+    private boolean checkDeleteCollision(float x, float y) {
+        return y > mDeleteView.getY() || mPictureView.checkDeleteCollision(x, y);
     }
 
     public abstract Bitmap getBitmap();

@@ -12,17 +12,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.juphoon.imgeditor.R;
 import com.juphoon.imgeditor.core.sticker.PictureSticker;
-import com.juphoon.imgeditor.core.sticker.PictureStickerAdjustHelper;
 import com.juphoon.imgeditor.core.sticker.PictureStickerHelper;
 import com.juphoon.imgeditor.core.sticker.PictureStickerMoveHelper;
 
-public abstract class PictureStickerView extends ViewGroup implements PictureSticker, View.OnClickListener {
+public abstract class PictureStickerView extends ViewGroup implements PictureSticker, PictureStickerMoveHelper.DragListener {
 
-    private static final String TAG = "IMGStickerView";
+    private static final String TAG = "PictureStickerView";
 
     private View mContentView;
 
@@ -34,8 +31,6 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
     private PictureStickerMoveHelper mMoveHelper;
 
     private PictureStickerHelper<PictureStickerView> mStickerHelper;
-
-    private ImageView mRemoveView, mAdjustView;
 
     private float mMaxScaleValue = MAX_SCALE_VALUE;
 
@@ -83,21 +78,8 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
         mContentView = onCreateContentView(context);
         addView(mContentView, getContentLayoutParams());
 
-        mRemoveView = new ImageView(context);
-        mRemoveView.setScaleType(ImageView.ScaleType.FIT_XY);
-        mRemoveView.setImageResource(R.mipmap.image_ic_delete);
-        addView(mRemoveView, getAnchorLayoutParams());
-        mRemoveView.setOnClickListener(this);
-
-        mAdjustView = new ImageView(context);
-        mAdjustView.setScaleType(ImageView.ScaleType.FIT_XY);
-        mAdjustView.setImageResource(R.mipmap.image_ic_adjust);
-        addView(mAdjustView, getAnchorLayoutParams());
-
-        new PictureStickerAdjustHelper(this, mAdjustView);
-
         mStickerHelper = new PictureStickerHelper<>(this);
-        mMoveHelper = new PictureStickerMoveHelper(this);
+        mMoveHelper = new PictureStickerMoveHelper(this, this);
     }
 
     public abstract View onCreateContentView(Context context);
@@ -114,6 +96,9 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
 
     @Override
     public void setScale(float scale) {
+        if (scale > 6f || scale < 0.3f) {
+            return;
+        }
         mScale = scale;
 
         mContentView.setScaleX(mScale);
@@ -151,11 +136,12 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
 
     @Override
     public void draw(Canvas canvas) {
-        if (isShowing()) {
-            canvas.drawRect(ANCHOR_SIZE_HALF, ANCHOR_SIZE_HALF,
-                    getWidth() - ANCHOR_SIZE_HALF,
-                    getHeight() - ANCHOR_SIZE_HALF, PAINT);
-        }
+        // disable the rect when chosen
+//        if (isShowing()) {
+//            canvas.drawRect(ANCHOR_SIZE_HALF, ANCHOR_SIZE_HALF,
+//                    getWidth() - ANCHOR_SIZE_HALF,
+//                    getHeight() - ANCHOR_SIZE_HALF, PAINT);
+//        }
         super.draw(canvas);
     }
 
@@ -195,13 +181,6 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
         if (count == 0) {
             return;
         }
-
-        mRemoveView.layout(0, 0, mRemoveView.getMeasuredWidth(), mRemoveView.getMeasuredHeight());
-        mAdjustView.layout(
-                right - left - mAdjustView.getMeasuredWidth(),
-                bottom - top - mAdjustView.getMeasuredHeight(),
-                right - left, bottom - top
-        );
 
         int centerX = (right - left) >> 1, centerY = (bottom - top) >> 1;
         int hw = mContentView.getMeasuredWidth() >> 1;
@@ -251,13 +230,6 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
         return handled | super.onTouchEvent(event);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == mRemoveView) {
-            onRemove();
-        }
-    }
-
     public void onRemove() {
         mStickerHelper.remove();
     }
@@ -279,6 +251,21 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
     @Override
     public boolean dismiss() {
         return mStickerHelper.dismiss();
+    }
+
+    @Override
+    public boolean startDrag() {
+        return mStickerHelper.startDrag();
+    }
+
+    @Override
+    public boolean dragging(float x, float y) {
+        return mStickerHelper.dragging(x, y);
+    }
+
+    @Override
+    public boolean stopDrag(float x, float y) {
+        return mStickerHelper.stopDrag(x, y);
     }
 
     @Override
@@ -305,5 +292,20 @@ public abstract class PictureStickerView extends ViewGroup implements PictureSti
     @Override
     public void unregisterCallback(Callback callback) {
         mStickerHelper.unregisterCallback(callback);
+    }
+
+    @Override
+    public void onDragStart() {
+        mStickerHelper.startDrag();
+    }
+
+    @Override
+    public void onDragging(float x, float y) {
+        mStickerHelper.dragging(x, y);
+    }
+
+    @Override
+    public void onDragDone(float x, float y) {
+        mStickerHelper.stopDrag(x, y);
     }
 }

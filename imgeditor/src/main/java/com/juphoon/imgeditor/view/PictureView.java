@@ -42,6 +42,12 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         void onMoveBegin(PictureMode mode);
 
         void onMoveEnd();
+
+        void onStickerDragStart();
+
+        void onStickerDragging(float x, float y);
+
+        void onStickerDragStop(PictureSticker pictureSticker, float x, float y);
     }
 
     private PictureMode mPreMode = PictureMode.NONE;
@@ -215,6 +221,10 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         return mImage.getMode();
     }
 
+    public boolean checkDeleteCollision(float x, float y) {
+        return !mImage.getClipFrame().contains(x, y);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         onDrawImages(canvas);
@@ -270,8 +280,9 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
 
         // TODO
         if (!mImage.isFreezing()) {
+            // 移出裁剪范围后不显示贴片
+//            mImage.onDrawStickerClip(canvas);
             // 文字贴片
-            mImage.onDrawStickerClip(canvas);
             mImage.onDrawStickers(canvas);
         }
 
@@ -565,6 +576,30 @@ public class PictureView extends FrameLayout implements Runnable, ScaleGestureDe
         ViewParent parent = stickerView.getParent();
         if (parent != null) {
             ((ViewGroup) parent).removeView(stickerView);
+        }
+        return true;
+    }
+
+    @Override
+    public <V extends View & PictureSticker> boolean onDragStart(V stickerView) {
+        if (mPictureViewListener != null) {
+            mPictureViewListener.onStickerDragStart();
+        }
+        return true;
+    }
+
+    @Override
+    public <V extends View & PictureSticker> boolean onDragging(V stickerView, float x, float y) {
+        if (mPictureViewListener != null) {
+            mPictureViewListener.onStickerDragging(x, y);
+        }
+        return true;
+    }
+
+    @Override
+    public <V extends View & PictureSticker> boolean onDragDone(V stickerView, float x, float y) {
+        if (mPictureViewListener != null) {
+            mPictureViewListener.onStickerDragStop(stickerView, x, y);
         }
         return true;
     }

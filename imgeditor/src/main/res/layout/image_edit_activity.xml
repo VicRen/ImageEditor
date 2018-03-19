@@ -22,4 +22,22 @@
 
     </ViewSwitcher>
 
+    <LinearLayout
+        android:id="@+id/delete_view"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="#B000"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@mipmap/image_ic_delete" />
+
+    </LinearLayout>
+
 </FrameLayout>

@@ -51,6 +51,21 @@ public class PictureStickerHelper<StickerView extends View & PictureSticker> imp
     }
 
     @Override
+    public boolean startDrag() {
+        return onDragStart(mView);
+    }
+
+    @Override
+    public boolean dragging(float x, float y) {
+        return onDragging(mView, x, y);
+    }
+
+    @Override
+    public boolean stopDrag(float x, float y) {
+        return onDragDone(mView, x, y);
+    }
+
+    @Override
     public RectF getFrame() {
         if (mFrame == null) {
             mFrame = new RectF(0, 0, mView.getWidth(), mView.getHeight());
@@ -83,6 +98,21 @@ public class PictureStickerHelper<StickerView extends View & PictureSticker> imp
     @Override
     public <V extends View & PictureSticker> boolean onRemove(V stickerView) {
         return mCallback != null && mCallback.onRemove(stickerView);
+    }
+
+    @Override
+    public <V extends View & PictureSticker> boolean onDragStart(V stickerView) {
+        return mCallback != null && mCallback.onDragStart(stickerView);
+    }
+
+    @Override
+    public <V extends View & PictureSticker> boolean onDragging(V stickerView, float x, float y) {
+        return mCallback != null && mCallback.onDragging(stickerView, x, y);
+    }
+
+    @Override
+    public <V extends View & PictureSticker> boolean onDragDone(V stickerView, float x, float y) {
+        return mCallback != null && mCallback.onDragDone(stickerView, x, y);
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.juphoon.imgeditor.core.PictureText;
 
 public class PictureStickerTextView extends PictureStickerView implements PictureTextEditDialog.Callback {
 
-    private static final String TAG = "IMGStickerTextView";
+    private static final String TAG = "PictureStickerTextView";
 
     private TextView mTextView;
 

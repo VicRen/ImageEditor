@@ -13,4 +13,7 @@
     <color name="image_color_purple">#861CF4</color>
     <color name="image_color_orange">#F1A536</color>
 
+    <color name="image_color_op_background">#B000</color>
+    <color name="image_color_delete_active_background">#E26266</color>
+
 </resources>
