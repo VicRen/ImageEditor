@@ -290,8 +290,8 @@ public class PictureObj {
 
         if (mMode == PictureMode.MOSAIC) {
 
-            int w = Math.round(mImage.getWidth() / 8f);
-            int h = Math.round(mImage.getHeight() / 8f);
+            int w = Math.round(mImage.getWidth() / 16f);
+            int h = Math.round(mImage.getHeight() / 16f);
 
             w = Math.max(w, 8);
             h = Math.max(h, 8);

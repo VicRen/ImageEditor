@@ -79,7 +79,8 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
 
         mStrokeGroup = findViewById(R.id.cg_strokes);
         mStrokeGroup.setOnCheckedChangeListener(this);
-        onStrokeChanged(57);
+        final float scale = getResources().getDisplayMetrics().density;
+        onStrokeChanged((int) (30 * scale + 0.5f));
 
         mLayoutOpSub = findViewById(R.id.layout_op_sub);
         mBtnUndo = findViewById(R.id.btn_undo);
@@ -202,8 +203,6 @@ abstract class PictureEditBaseActivity extends Activity implements View.OnClickL
 
     @Override
     public void onStickerDragStart() {
-        mDeleteView.setVisibility(View.VISIBLE);
-        mOpSwitcher.setVisibility(View.INVISIBLE);
     }
 
     @Override

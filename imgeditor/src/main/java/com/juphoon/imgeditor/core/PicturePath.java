@@ -13,7 +13,6 @@ public class PicturePath {
     private int color = Color.WHITE;
 
     private float width = BASE_MOSAIC_WIDTH;
-    private float mosaicWidth = BASE_MOSAIC_WIDTH;
 
     private PictureMode mode = PictureMode.DOODLE;
 

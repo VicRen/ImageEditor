@@ -11,7 +11,7 @@
 
     </style>
 
-    <style name="ImageTextDialog" parent="android:Theme.Holo.Dialog">
+    <style name="ImageTextDialog" parent="android:Theme.DeviceDefault.Dialog">
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -25,7 +25,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
 
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.8</item>
+        <item name="android:backgroundDimAmount">0</item>
 
         <item name="android:windowAnimationStyle">@style/ImageDialogAnimation</item>
 
